@@ -5,6 +5,19 @@ if (flags.includes("r")) {
         return "path doesn't exist"
     }
     await FS.delete(n);
+    const arr = (await FS.getFromPath("/user/alias/alias.sh")).split("\n");
+    let o = -1;
+    for(let i = 0; i < arr.length; i++) {
+        const item = arr[i]
+        if(item.startsWith(`alias -i ${args[0]}`)) {
+           o = i; 
+        }
+    }
+    if(o === -1) {
+        return "Not an alias";
+    }
+    arr.splice(o, 1);
+    await FS.addFile("/user/alias/alias.sh", arr.join("\n"));
 } else {
     if(!args[0] || !args[1]) return "expected at least 2 arguments"
     const a0 = args[0]
