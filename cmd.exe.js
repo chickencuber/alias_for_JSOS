@@ -14,5 +14,6 @@ if (flags.includes("r")) {
         return "path already exists";
     }
     await FS.addFile(n + ".sh", args.join(" "));
-    await FS.addFile("/user/alias/alias.sh", await FS.getFromPath("/user/alias/alias.sh") + `\nalias ${a0} ${args.join(" ")}`)
+    if(!flags.includes("i"))
+        await FS.addFile("/user/alias/alias.sh", await FS.getFromPath("/user/alias/alias.sh") + `\nalias -i ${a0} ${args.join(" ")}`)
 }
